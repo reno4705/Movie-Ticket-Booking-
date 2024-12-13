@@ -84,28 +84,6 @@ const Buytickets: React.FC = () => {
         console.log(d);
     };
 
-    // const movie = {
-    //     moviename: 'Jawan',
-    //     screen: '4Dx',
-    //     date: new Date(),
-    //     language: 'Hindi',
-    //     type: 'Action/Thriller',
-    //     screens: [
-    //         {
-    //             name: 'Screen 1',
-    //             location: 'PVR Cinemas, Forum Mall, Koramangala'
-    //         },
-    //         {
-    //             name: 'Screen 2',
-    //             location: 'PVR Cinemas, Forum Mall, Koramangala'
-    //         },
-    //         {
-    //             name: 'Screen 3',
-    //             location: 'PVR Cinemas, Forum Mall, Koramangala'
-    //         }
-    //     ]
-    // }
-
     return (
         <>
             {movie && (

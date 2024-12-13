@@ -100,4 +100,65 @@ router.post('/changecity', checkAuthToken, async (req: AuthRequest, res: Respons
     }
 })
 
+// Forgot Password
+router.post("/forgot-password", async (req: Request, res: Response) => {
+    const { email } = req.body;
+
+    try {
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, { expiresIn: "20m" });
+
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'benedictreno47@gmail.com',
+                pass: 'jlwh dhbn qyez hxsd'
+            }
+        });
+
+        const resetLink = `http://localhost:3000/reset_password/${user._id}/${token}`;
+        const mailOptions = {
+            from: 'youremail@gmail.com',
+            to: email,
+            subject: 'Password Reset Link',
+            text: `Please use the following link to reset your password: ${resetLink}`,
+        };
+
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                console.error("Error sending email:", error);
+                return res.status(500).json({ message: "Error sending email" });
+            } else {
+                console.log('Email sent: ' + info.response);
+                return res.json({ message: "Reset password email sent successfully" });
+            }
+        });
+    } catch (error) {
+        console.error("Error in forgot-password:", error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+// Reset Password
+router.post("/reset-password/:id/:token", async (req: Request, res: Response) => {
+    const { id, token } = req.params;
+    const { password } = req.body;
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        await User.findByIdAndUpdate(id, { password: hashedPassword });
+
+        return res.status(200).json({ ok:true, message: "Password reset successfully" });
+    } catch (error) {
+        console.error("Error in reset-password:", error);
+        return res.status(400).json({ ok:false, message: "Invalid or expired token" });
+    }
+});
+
 export default router;

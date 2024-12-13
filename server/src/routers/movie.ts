@@ -404,10 +404,7 @@ router.get("/schedulebymovie/:screenid/:date/:movieid", async (req, res) => {
     });
 });
 
-router.get(
-    "/getuserbookings",
-    checkAuthToken,
-    async (req: AuthRequest, res: Response) => {
+router.get("/getuserbookings",checkAuthToken,async (req: AuthRequest, res: Response) => {
         try {
             const user = await User.findById(req.userId).populate("bookings");
             if (!user) {

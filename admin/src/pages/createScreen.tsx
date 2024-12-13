@@ -2117,9 +2117,7 @@ const CreateScreenPage: React.FC = () => {
                 screen.city === "" ||
                 screen.screenType === ""
             ) {
-                toast.error("Please fill all the fields", {
-                    position: "top-right",
-                });
+                toast.error("Please fill all the fields");
                 return;
             }
 
@@ -2138,15 +2136,10 @@ const CreateScreenPage: React.FC = () => {
             if (response.ok) {
                 const data = await response.json();
                 console.log("Screen creation successful", data);
-
-                toast.success("Screen Created Successfully", {
-                    position: "top-right",
-                });
+                toast.success("Screen Created Successfully");
             } else {
                 console.error("Screen creation failed", response.statusText);
-                toast.error("Screen Creation Failed", {
-                    position: "top-right",
-                });
+                toast.error("Screen Creation Failed");
             }
         } catch (error) {
             console.log(error);

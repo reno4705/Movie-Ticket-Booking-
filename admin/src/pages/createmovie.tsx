@@ -122,9 +122,7 @@ const CreateMoviePage: React.FC = () => {
                 movie.language.length === 0 ||
                 movie.releaseDate === ""
             ) {
-                toast.error("Please fill all the fields", {
-                    position: "top-right",
-                });
+                toast.error("Please fill all the fields");
                 return;
             }
 
@@ -134,18 +132,14 @@ const CreateMoviePage: React.FC = () => {
             if (movie.portraitImg) {
                 portraitImgUrl = await uploadImage(movie.portraitImg);
                 if (!portraitImgUrl) {
-                    toast.error("Portrait Image upload failed", {
-                        position: "top-right",
-                    });
+                    toast.error("Portrait Image upload failed");
                     return;
                 }
             }
             if (movie.landscapeImg) {
                 landscapeImgUrl = await uploadImage(movie.landscapeImg);
                 if (!landscapeImgUrl) {
-                    toast.error("Landscape Image upload failed", {
-                        position: "top-right",
-                    });
+                    toast.error("Landscape Image upload failed");
                     return;
                 }
             }
@@ -166,13 +160,11 @@ const CreateMoviePage: React.FC = () => {
 
             if (response.ok) {
                 const data = await response.json();
+                toast.info("Creating new movie...")
                 setMovieId(data.data._id);
                 console.log(data.data._id);
                 console.log("Movie creation successful", data);
-
-                toast.success("Movie Created Successfully", {
-                    position: "top-center",
-                });
+                toast.success("Movie Created Successfully");
             } else {
                 console.error("Movie creation failed", response.statusText);
                 toast.error("Movie Creation Failed", {

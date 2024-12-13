@@ -23,8 +23,31 @@ interface Booking {
     userId: string;
 }
 
+const defaultBooking: Booking[] = [{
+    _id: "123456789",
+    showTime: "",
+    showDate: "",
+    movieId: "",
+    movieName: "guest",
+    screenId: "",
+    screenName: "",
+    seats: [
+        {
+            row: "",
+            col: 0,
+            seat_id: "",
+            price: 0,
+            _id: "",
+        },
+    ],
+    totalPrice: 0,
+    paymentId: "",
+    paymentType: "",
+    userId: "",
+}];
+
 const Profile: React.FC = () => {
-    const [bookings, setBookings] = useState<Booking[]>();
+    const [bookings, setBookings] = useState<Booking[]>(defaultBooking);
     const [user, setUser] = useState<UserType>();
 
     const getBookings = async () => {
@@ -41,7 +64,8 @@ const Profile: React.FC = () => {
             );
             const data = await res.json();
             if (data.ok) {
-                console.log(data);
+                console.log(data.data);
+
                 setBookings(data.data);
             } else {
                 console.log(data);
@@ -110,7 +134,7 @@ const Profile: React.FC = () => {
             <div className="mt-[20px] w-full flex flex-col items-center justify-center">
                 <h2>Bookings</h2>
                 <div className="flex flex-wrap gap-[10px] w-full justify-center">
-                    {bookings?.map((booking) => (
+                    {bookings.map((booking) => (
                         <div
                             className="mx-[0] my-[20px] border-[1px] border-[solid] border-[#ccc] rounded-[5px] p-[15px]"
                             key={booking._id}
@@ -134,7 +158,7 @@ const Profile: React.FC = () => {
                                 <p>
                                     {booking.seats.map((seat, index) => (
                                         <span key={index}>
-                                            {seat.seat_id},{" "}
+                                            {seat?.seat_id},{" "}
                                         </span>
                                     ))}
                                 </p>

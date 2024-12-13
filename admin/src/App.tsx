@@ -7,7 +7,7 @@ import CreateMoviePage from "./pages/createmovie";
 import CreateScreenPage from "./pages/createScreen";
 import AddCelebrities from "./pages/addcelebrity";
 import Schedule from "./pages/schedule";
-import { ToastContainer } from "react-toastify";
+import { Slide, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
@@ -16,7 +16,19 @@ function App() {
     <div className="App">
             <Router>
             <Navbar />
-            <ToastContainer />
+            <ToastContainer 
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={true}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+                transition={Slide}
+            />
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="pages/auth/login" element={<Login />} />

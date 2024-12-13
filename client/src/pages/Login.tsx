@@ -54,23 +54,16 @@ const Login: React.FC = () => {
             .then((response) => {
                 console.log("login res ", response);
                 if (response.ok) {
-                    toast(response.message, {
-                        type: "success",
-                        position: "top-right",
-                        autoClose: 2000,
-                    });
+                    toast(response.message);
                     navigate("/");
+                    window.location.reload();
                     // await setCookie('authToken', response.data.authToken)
                     // await setCookie('refreshToken', response.data.refreshToken)
                     // const authToken = await getCookie('authToken');
                     // console.log('My Cookie Value:', authToken);
                     // checkLogin();
                 } else {
-                    toast(response.message, {
-                        type: "error",
-                        position: "top-right",
-                        autoClose: 2000,
-                    });
+                    toast(response.message);
                 }
             })
             .catch((error) => {
@@ -163,7 +156,7 @@ const Login: React.FC = () => {
                         )}
 
                         <Link to="/forgot-password">
-                            <p className="ml-2">Forgot Password?</p>
+                            <p className="ml-2 hover:text-[rgb(248,68,100)] hover:underline">Forgot Password?</p>
                         </Link>
 
                         <button
